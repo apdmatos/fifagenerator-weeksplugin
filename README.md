@@ -44,7 +44,7 @@ As this is a webpage plugin, the only way to test it is to create a chrome plugi
 Go to `Chrome Extensions -> Load unpacked extension` and choose the folder where the project is.
 
 Every time you change the script, do not forget to:
-1. Run the command: `npm run concat``
+1. Run the command: `npm run concat`
 2. Reload the chrome extension
 
 ## How to contribute
