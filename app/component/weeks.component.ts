@@ -3,6 +3,7 @@ import {PaginatePipe, PaginationService, PaginationControlsCmp, IPaginationInsta
 
 import { Fixtures } from '../model/fixtures';
 import { Game } from '../model/game';
+import { Team } from '../model/team';
 import { WeekGames } from '../model/weekgames'
 import { FixturesService } from '../service/fixtures-service'
 
@@ -10,6 +11,7 @@ import { FixturesService } from '../service/fixtures-service'
   selector: 'week-games',
   template: `
     <div *ngIf=availableGamesInWeek>
+        <week-info [exemptTeam]=exemptTeam [week]=currentWeek></week-info>
         <div class="row">
             <game *ngFor="let game of weekGames | paginate: { id: 'server', itemsPerPage: weekGames.length, currentPage: currentWeek, totalItems: numberOfGames }" [game]=game></game>
         </div>
@@ -42,10 +44,6 @@ export class WeeksComponent implements OnInit {
     page: number;
 
     constructor(private fixturesService: FixturesService) { }
-   
-    private getFixtures(): void {
-        
-    }
     
     goToWeek(week: number): void {
         this.page = week;
@@ -73,10 +71,13 @@ export class WeeksComponent implements OnInit {
         return this.fixtures.numberOfGames();
     }
 
+    get exemptTeam() : Team {
+        return this.fixtures.getExemptTeamOnWeek(this.page);
+    }
+
     ngOnInit(): void {
 
-        // load page from the route
-
+        // todo: load page from the route
         this.fixturesService.getFixtures()
             .then(fixtures => 
             {

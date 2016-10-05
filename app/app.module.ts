@@ -5,6 +5,7 @@ import {Ng2PaginationModule} from 'ng2-pagination';
 
 import { WeeksComponent }  from './component/weeks.component';
 import { GameComponent }  from './component/game.component';
+import { WeekInfoComponent }  from './component/weekInfo.component';
 
 @NgModule({
     imports:      [ 
@@ -14,7 +15,8 @@ import { GameComponent }  from './component/game.component';
     ],
     declarations: [ 
         WeeksComponent,
-        GameComponent
+        GameComponent,
+        WeekInfoComponent
     ],
     bootstrap:    [ WeeksComponent ]
 })

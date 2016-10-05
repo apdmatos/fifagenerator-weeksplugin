@@ -12,7 +12,7 @@
     "clean": "rm -rf dist && rm -rf app/**/*.js* app/**.js*",
     "build": "npm run clean && tsc",
     "concat": "npm run build && browserify -s main dist/main.js > dist/bundle.js",
-    "build_prod": "npm run concat && npm run minify",
+    "build_prod": "npm run concat",
     "minify": "uglifyjs dist/bundle.js --screw-ie8 --compress --mangle --output dist/bundle.min.js"
   },
   "license": "ISC",

@@ -1,5 +1,6 @@
 import { Game } from './game';
 import { Fixtures } from './fixtures';
+import { Team } from './team';
 
 export class WeekGames {
 
@@ -37,5 +38,30 @@ export class WeekGames {
             }
         }
         return false;
+    }
+
+    getExemptTeam() : Team {
+        let len = this.fixtures.teams.length;
+        for(let i = 0; i < len; ++i) {
+
+            let team = this.fixtures.teams[i];
+            let isInGame = false;
+
+            for(let j = 0; j < this._games.length; ++ j) {
+
+                let game = this._games[j];
+                if(game.teamPlaysInGame(team)) {
+                    isInGame = true;
+                    break;
+                }
+            }
+
+            if(!isInGame) {
+                return team;
+            }
+        }
+
+        // no exempt teams...
+        return null;
     }
 }

@@ -10,4 +10,8 @@ export class Team {
 	setLogo(logoUrl) : void {
 		this.teamLogo = logoUrl;
 	}
+
+	equals(team: Team) : Boolean {
+		return team.teamName === this.teamName;
+	}
 }

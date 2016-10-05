@@ -18,4 +18,8 @@ export class Game {
     hasResult(): Boolean {
         return !!this.result;
     }
+
+    teamPlaysInGame(team: Team): Boolean {
+        return this.homeTeam.equals(team) || this.awayTeam.equals(team);
+    }
 }

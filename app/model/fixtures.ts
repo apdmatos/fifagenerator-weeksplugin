@@ -73,4 +73,9 @@ export class Fixtures {
         return this._weekGames.length;
     }
 
+    getExemptTeamOnWeek(week: number) : Team {
+        let weekGames = this.getGamesForWeek(week);
+        return weekGames ? weekGames.getExemptTeam() : null;
+    }
+
 }
