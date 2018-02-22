@@ -3,7 +3,7 @@
     "name": "Fifa generator week view plugin",
     "short_name": "Week view plugin",
     "description": "A plugin to Fifa generator website that provides a week view",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "author": "André Matos @apdmatos",
     "content_scripts": [
     {
