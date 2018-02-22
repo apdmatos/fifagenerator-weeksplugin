@@ -3,19 +3,19 @@ import { WeekGames } from './weekgames';
 import { Game } from './game';
 
 export class Fixtures {
-    
+
     private _teams: Array<Team> = [];
     private _weekGames: Array<WeekGames> = [];
     private weekGameIdx: number = 0;
 
     constructor() {}
-    
+
     get teams() : Array<Team> {
         return this._teams;
-    } 
+    }
 
     getGamesForWeek(week: number) : WeekGames {
-        week -= 1; 
+        week -= 1;
         if(week < 0 || week >= this._weekGames.length) {
             return null;
         }
@@ -66,7 +66,7 @@ export class Fixtures {
         for(let i: number = 0; i < this._weekGames.length; ++i) {
             let weekGames : WeekGames = this._weekGames[i];
             if(!weekGames.hasAnyGamePlayed()) {
-                return i;
+                return i + 1;
             }
         }
 

@@ -39,15 +39,15 @@ import { FixturesService } from '../service/fixtures-service'
   pipes: [PaginatePipe]
 })
 export class WeeksComponent implements OnInit {
-    
+
     fixtures: Fixtures;
     page: number;
 
     constructor(private fixturesService: FixturesService) { }
-    
+
     goToWeek(week: number): void {
         this.page = week;
-    } 
+    }
 
     get weekGames(): Array<Game> {
         if(!this.fixtures) {
@@ -79,7 +79,7 @@ export class WeeksComponent implements OnInit {
 
         // todo: load page from the route
         this.fixturesService.getFixtures()
-            .then(fixtures => 
+            .then(fixtures =>
             {
                 if(!this.page) {
                     this.page = fixtures.getCurrentWeek();

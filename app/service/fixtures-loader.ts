@@ -4,20 +4,22 @@ import { GameResult } from '../model/gameresult';
 import { Team } from '../model/team';
 import { WeekGames } from '../model/weekgames';
 
-const URL_REGEX = 'http://www.fifagenerator.com/tournament/54725/table/';
+const URL_REGEX: RegExp = new RegExp('http://www.fifagenerator.com/tournament/([0-9]+)/.*');
 const EXTRACT_BODY_REGEX: RegExp = new RegExp('<body[^>]*>((.|[\n\r])*)</body>', 'im');
 
 export function load() : Promise<Fixtures> {
+
+    let tournamentId: string = URL_REGEX.exec(window.location.href)[1];
     let fixtures = new Fixtures();
-    return loadTeams()
+    return loadTeams(tournamentId)
         .then(teams => {
             teams.forEach(team => fixtures.addTeam(team));
-            return loadGames(fixtures);
+            return loadGames(tournamentId, fixtures);
         });
 }
 
-function loadTeams() : Promise<Array<Team>> {
-    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/54725/table/'))
+function loadTeams(tournamentId: string) : Promise<Array<Team>> {
+    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/' + tournamentId + '/table/'))
         .then(data => {
             let teams = $($.parseHTML(data)).find('div.row table.table.table-striped:first tbody tr td:nth-child(2) a');
             let teamsContainer: Array<Team> = [];
@@ -34,15 +36,15 @@ function loadTeams() : Promise<Array<Team>> {
         });
 }
 
-function loadGames(fixtures: Fixtures, page?: number, maxPages?: number) : Promise<Fixtures> {
+function loadGames(tournamentId: string, fixtures: Fixtures, page?: number, maxPages?: number) : Promise<Fixtures> {
 	page = page ? page : 1;
 	if(maxPages && page > maxPages) {
 		return Promise.resolve(fixtures);
 	}
 
-    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/54725/fixtures/?page='+page))
+    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/' + tournamentId + '/fixtures/?page='+page))
         .then(data => {
-            
+
             $('footer').append("<div id='locater' style='visibility:hidden;'></div>");
             let body = new RegExp('<body[^>]*>((.|[\n\r])*)</body>', 'im').exec(data)[0];
             $('footer div#locater').append($($.parseHTML(body)))
@@ -68,12 +70,12 @@ function loadGames(fixtures: Fixtures, page?: number, maxPages?: number) : Promi
                 if(result.awayTeamGoals && result.awayTeamGoals) {
                     gameResult = result;
                 }
-                
+
                 let game = new Game(id, homeTeam, awayTeam, page, gameResult);
                 fixtures.addGame(game);
             });
 
-            return loadGames(fixtures, page + 1, maxPages)
+            return loadGames(tournamentId, fixtures, page + 1, maxPages)
         });
 }
 
