@@ -66,7 +66,10 @@ export class Fixtures {
         for(let i: number = 0; i < this._weekGames.length; ++i) {
             let weekGames : WeekGames = this._weekGames[i];
             if(!weekGames.hasAnyGamePlayed()) {
-                return i + 1;
+                if(i == 0) {
+                   return 1;
+                }
+                return i;
             }
         }
 
