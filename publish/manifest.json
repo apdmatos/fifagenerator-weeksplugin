@@ -3,16 +3,16 @@
     "name": "Fifa generator week view plugin",
     "short_name": "Week view plugin",
     "description": "A plugin to Fifa generator website that provides a week view",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "author": "André Matos @apdmatos",
     "content_scripts": [
       {
         "js": [
-          "./node_modules/jquery/dist/jquery.min.js",
+          "jquery.min.js",
           "index.js",
-          "./node_modules/zone.js/dist/zone.js",
-          "./node_modules/reflect-metadata/Reflect.js",
-          "dist/bundle.js"
+          "zone.js",
+          "Reflect.js",
+          "bundle.js"
         ],
         "matches": [
           "https://www.fifagenerator.com/tournament/*"
