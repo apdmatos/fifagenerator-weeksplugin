@@ -400,7 +400,7 @@ exports.WeekGames = WeekGames;
 var fixtures_1 = require('../model/fixtures');
 var game_1 = require('../model/game');
 var team_1 = require('../model/team');
-var URL_REGEX = new RegExp('http://www.fifagenerator.com/tournament/([0-9]+)/.*');
+var URL_REGEX = new RegExp('https://www.fifagenerator.com/tournament/([0-9]+)/.*');
 var EXTRACT_BODY_REGEX = new RegExp('<body[^>]*>((.|[\n\r])*)</body>', 'im');
 function load() {
     var tournamentId = URL_REGEX.exec(window.location.href)[1];
@@ -413,7 +413,7 @@ function load() {
 }
 exports.load = load;
 function loadTeams(tournamentId) {
-    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/' + tournamentId + '/table/'))
+    return Promise.resolve($.get('https://www.fifagenerator.com/tournament/' + tournamentId + '/table/'))
         .then(function (data) {
         var teams = $($.parseHTML(data)).find('div.row table.table.table-striped:first tbody tr td:nth-child(2) a');
         var teamsContainer = [];
@@ -432,7 +432,7 @@ function loadGames(tournamentId, fixtures, page, maxPages) {
     if (maxPages && page > maxPages) {
         return Promise.resolve(fixtures);
     }
-    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/' + tournamentId + '/fixtures/?page=' + page))
+    return Promise.resolve($.get('https://www.fifagenerator.com/tournament/' + tournamentId + '/fixtures/?page=' + page))
         .then(function (data) {
         $('footer').append("<div id='locater' style='visibility:hidden;'></div>");
         var body = new RegExp('<body[^>]*>((.|[\n\r])*)</body>', 'im').exec(data)[0];

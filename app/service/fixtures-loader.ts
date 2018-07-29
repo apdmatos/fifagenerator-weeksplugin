@@ -4,7 +4,7 @@ import { GameResult } from '../model/gameresult';
 import { Team } from '../model/team';
 import { WeekGames } from '../model/weekgames';
 
-const URL_REGEX: RegExp = new RegExp('http://www.fifagenerator.com/tournament/([0-9]+)/.*');
+const URL_REGEX: RegExp = new RegExp('https://www.fifagenerator.com/tournament/([0-9]+)/.*');
 const EXTRACT_BODY_REGEX: RegExp = new RegExp('<body[^>]*>((.|[\n\r])*)</body>', 'im');
 
 export function load() : Promise<Fixtures> {
@@ -19,7 +19,7 @@ export function load() : Promise<Fixtures> {
 }
 
 function loadTeams(tournamentId: string) : Promise<Array<Team>> {
-    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/' + tournamentId + '/table/'))
+    return Promise.resolve($.get('https://www.fifagenerator.com/tournament/' + tournamentId + '/table/'))
         .then(data => {
             let teams = $($.parseHTML(data)).find('div.row table.table.table-striped:first tbody tr td:nth-child(2) a');
             let teamsContainer: Array<Team> = [];
@@ -42,7 +42,7 @@ function loadGames(tournamentId: string, fixtures: Fixtures, page?: number, maxP
 		return Promise.resolve(fixtures);
 	}
 
-    return Promise.resolve($.get('http://www.fifagenerator.com/tournament/' + tournamentId + '/fixtures/?page='+page))
+    return Promise.resolve($.get('https://www.fifagenerator.com/tournament/' + tournamentId + '/fixtures/?page='+page))
         .then(data => {
 
             $('footer').append("<div id='locater' style='visibility:hidden;'></div>");
